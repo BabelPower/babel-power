@@ -1,33 +1,46 @@
 import { AuthModel } from "./model";
 import { userTable } from "../db/schema/user";
-import { eq, or } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "../db";
 
 export abstract class AuthService {
-    static async login({ text, password }: AuthModel["loginInput"]) {
+    static async login({ phone, password }: AuthModel["loginInput"]) {
         const one = await db
             .select({
                 id: userTable.id,
                 password: userTable.password
             })
             .from(userTable)
-            .where(
-                or(
-                    eq(userTable.phone, text),
-                    eq(userTable.email, text)
-                )
-            )
+            .where(eq(userTable.phone, phone))
             .limit(1)
-            .then(rows => rows[0] ?? null);
+            .then(rows => rows[0] ?? null)
 
-        if (!one) return null;
+        if (!one) {
+            throw new Error("account or password is incorrect");
+        }
 
-        const ok = await Bun.password.verify(password, one.password, "bcrypt");
+        const ok = await Bun.password.verify(password, one.password, "bcrypt")
 
-        if (!ok) return null;
+        if (!ok) {
+            throw new Error("account or password is incorrect");
+        }
 
         return {
             id: one.id.toString()
-        };
+        }
+    }
+
+    static async register({ phone, email, password, captcha }: AuthModel["registerInput"]) {
+        const one = await db.select({ id: userTable.id })
+            .from(userTable)
+            .where(eq(userTable.phone, phone))
+            .then(rows => rows[0] ?? null)
+        if (one) {
+            throw new Error("User already exists")
+        }
+    }
+
+    static async getCaptcha(email: string) {
+
     }
 }
