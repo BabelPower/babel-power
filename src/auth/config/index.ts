@@ -5,16 +5,18 @@ export type PublicRoute = {
 };
 
 export const publicRoutes: PublicRoute[] = [
-    { method: "POST", path: "/auth/login", match: "exact" }
+    { method: "ALL", path: "/auth", match: "prefix" }
 ];
 
 export const isPublicRoute = (method: string, path: string) =>
     publicRoutes.some(route => {
-        if (route.method !== method) return false;
-
-        if (route.match === "prefix") {
-            return path.startsWith(route.path);
+        if (route.method !== "ALL" && route.method !== method) {
+            return false
         }
 
-        return path === route.path;
+        if (route.match === "prefix") {
+            return path.startsWith(route.path)
+        }
+
+        return path === route.path
     });

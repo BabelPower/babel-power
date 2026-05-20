@@ -1,4 +1,4 @@
-import { Elysia } from "elysia";
+import { Elysia, status } from "elysia";
 import { AuthService } from "./service";
 import { AuthModel } from "./model";
 import { authJwtPlugin } from "./jwt";
@@ -18,11 +18,13 @@ export const authController = new Elysia({ prefix: "/auth" })
             200: AuthModel.loginResponse
         }
     })
-    .get("/catpcha", ({ query: { email } }) => {
-        AuthService.getCaptcha(email)
+    .get("/captcha", async ({ query: { email } }) => {
+        await AuthService.getCaptcha(email)
+        return status(202)
     })
     .post("/register", async ({ body }) => {
-
+        return status(200)
     }, {
         body: AuthModel.registerInput
     });
+

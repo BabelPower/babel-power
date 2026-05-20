@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "8c2a49ff-3ed5-4ffa-b1ad-762730b74bc8",
+  "id": "c530c4bf-ab95-4e56-b0d7-6b47dcec6383",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -84,7 +84,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "userId",
+      "name": "user_id",
       "entityType": "columns",
       "schema": "public",
       "table": "user_role_mapping"
@@ -97,7 +97,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "roleId",
+      "name": "role_id",
       "entityType": "columns",
       "schema": "public",
       "table": "user_role_mapping"
@@ -188,7 +188,7 @@
       "default": null,
       "generated": null,
       "identity": null,
-      "name": "registeredAt",
+      "name": "registered_at",
       "entityType": "columns",
       "schema": "public",
       "table": "user"
@@ -235,7 +235,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "userId"
+        "user_id"
       ],
       "schemaTo": "public",
       "tableTo": "user",
@@ -244,7 +244,7 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "user_role_mapping_userId_user_id_fkey",
+      "name": "user_role_mapping_user_id_user_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "user_role_mapping"
@@ -252,7 +252,7 @@
     {
       "nameExplicit": false,
       "columns": [
-        "roleId"
+        "role_id"
       ],
       "schemaTo": "public",
       "tableTo": "role",
@@ -261,15 +261,15 @@
       ],
       "onUpdate": "NO ACTION",
       "onDelete": "NO ACTION",
-      "name": "user_role_mapping_roleId_role_id_fkey",
+      "name": "user_role_mapping_role_id_role_id_fkey",
       "entityType": "fks",
       "schema": "public",
       "table": "user_role_mapping"
     },
     {
       "columns": [
-        "userId",
-        "roleId"
+        "user_id",
+        "role_id"
       ],
       "nameExplicit": false,
       "name": "user_role_mapping_pkey",
