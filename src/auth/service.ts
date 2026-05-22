@@ -7,6 +7,11 @@ import { Snowflake } from "@timondev/snowflakes";
 import { CAPTCHA_TTL_MS, CAPTCHA_TTL_SECONDS, publishCaptchaMail } from "../middleware/mq";
 
 export abstract class AuthService {
+    /**
+     * 登录
+     * @param phone 手机号
+     * @param password 密码
+     */
     static async login({ phone, password }: AuthModel["loginInput"]) {
         const one = await db
             .select({
@@ -33,6 +38,13 @@ export abstract class AuthService {
         }
     }
 
+    /**
+     * 注册
+     * @param phone 手机号
+     * @param email 邮箱
+     * @param password 密码
+     * @param captcha 邮箱验证码
+     */
     static async register({ phone, email, password, captcha }: AuthModel["registerInput"]) {
         const captchaCache = await redis.get(`captcha:${ email }`)
         if (!captchaCache || captchaCache !== captcha) {
@@ -56,6 +68,10 @@ export abstract class AuthService {
         })
     }
 
+    /**
+     * 获取邮箱验证码
+     * @param email 邮箱
+     */
     static async getCaptcha(email: string) {
         const captcha = crypto.randomUUID().slice(0, 6);
         const cacheKey = `captcha:${ email }`;
