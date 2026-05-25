@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           BigInt   @id
+  username     String
+  phone        String   @unique(map: "unique_phone")
+  password     String
+  email        String
+  avatar       String?
+  registeredAt DateTime @map("registered_at")
+  updatedBy    String?  @map("updated_by")
+  updatedById  BigInt?  @map("updated_by_id")
+  updatedAt    DateTime? @map("updated_at")
+
+  roles UserRoleMapping[]
+
+  @@map("user")
+}
+
+model Role {
+  id        BigInt   @id
+  code      String   @unique(map: "unique_code")
+  name      String
+  createdAt DateTime @map("created_at")
+
+  users UserRoleMapping[]
+
+  @@map("role")
+}
+
+model UserRoleMapping {
+  userId BigInt @map("user_id")
+  roleId BigInt @map("role_id")
+  user   User   @relation(fields: [userId], references: [id])
+  role   Role   @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId])
+  @@map("user_role_mapping")
+}

@@ -1,10 +1,8 @@
 import { AuthModel } from "./model";
-import { userTable } from "../db/schema/user";
-import { eq } from "drizzle-orm";
-import { db } from "../db";
-import { redis } from "../middleware/redis";
+import { prisma } from "../db";
 import { Snowflake } from "@timondev/snowflakes";
 import { CAPTCHA_TTL_MS, CAPTCHA_TTL_SECONDS, publishCaptchaMail } from "../middleware/mq";
+import { redis } from "../middleware/redis";
 import { logger } from "../middleware/logger";
 
 export abstract class AuthService {
@@ -14,15 +12,10 @@ export abstract class AuthService {
      * @param password 密码
      */
     static async login({ phone, password }: AuthModel["loginInput"]) {
-        const one = await db
-            .select({
-                id: userTable.id,
-                password: userTable.password
-            })
-            .from(userTable)
-            .where(eq(userTable.phone, phone))
-            .limit(1)
-            .then(rows => rows[0] ?? null)
+        const one = await prisma.user.findFirst({
+            where: { phone },
+            select: { id: true, password: true },
+        })
 
         if (!one) {
             throw new Error("account or password is incorrect");
@@ -51,21 +44,22 @@ export abstract class AuthService {
         if (!captchaCache || captchaCache !== captcha) {
             throw new Error("captcha is incorrect")
         }
-        const one = await db.select({ id: userTable.id })
-            .from(userTable)
-            .where(eq(userTable.phone, phone))
-            .then(rows => rows[0] ?? null)
-        if (one) {
+        const existing = await prisma.user.findFirst({
+            where: { phone },
+        })
+        if (existing) {
             throw new Error("User already exists")
         }
         const hashedPassword = await Bun.password.hash(password, "bcrypt")
-        await db.insert(userTable).values({
-            id: Snowflake.generate(),
-            username: phone,
-            phone,
-            password: hashedPassword,
-            email,
-            registeredAt: new Date(),
+        await prisma.user.create({
+            data: {
+                id: Snowflake.generate(),
+                username: phone,
+                phone,
+                password: hashedPassword,
+                email,
+                registeredAt: new Date(),
+            },
         })
     }
 
