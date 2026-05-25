@@ -5,6 +5,7 @@ import {
     MAIL_EXCHANGE,
     mq,
 } from "../index";
+import { logger } from "../../logger";
 
 export const startMailListener = async () => {
     await mq.configure({
@@ -46,8 +47,10 @@ export const startMailListener = async () => {
 
         try {
             await sendMail(payload.to, payload.subject, payload.html)
+            logger.info({ to: payload.to }, 'mail sent');
             mq.ack(message)
-        } catch {
+        } catch (err) {
+            logger.error({ err, to: payload.to }, 'mail send failed');
             mq.nack(message)
         }
     }

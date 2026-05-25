@@ -5,6 +5,7 @@ import { db } from "../db";
 import { redis } from "../middleware/redis";
 import { Snowflake } from "@timondev/snowflakes";
 import { CAPTCHA_TTL_MS, CAPTCHA_TTL_SECONDS, publishCaptchaMail } from "../middleware/mq";
+import { logger } from "../middleware/logger";
 
 export abstract class AuthService {
     /**
@@ -76,12 +77,7 @@ export abstract class AuthService {
         const captcha = crypto.randomUUID().slice(0, 6);
         const cacheKey = `captcha:${ email }`;
 
-        await redis.set(cacheKey, captcha, {
-            expiration: {
-                type: 'EX',
-                value: CAPTCHA_TTL_SECONDS
-            }
-        })
+        await redis.set(cacheKey, captcha, 'EX', CAPTCHA_TTL_SECONDS)
 
         const title = '<h1>Elysian-oven 验证码</h1>';
         const body = `<p>您的验证码是：<strong>${ captcha }</strong></p>`;
@@ -96,6 +92,7 @@ export abstract class AuthService {
             })
         } catch (error) {
             await redis.del(cacheKey)
+            logger.error(error)
             throw error
         }
     }
