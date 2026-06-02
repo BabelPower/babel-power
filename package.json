@@ -1,9 +1,10 @@
 {
-  "name": "elysian-oven",
+  "name": "babel-power",
   "version": "1.0.50",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/index.ts",
+    "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
     "@elysia/bearer": "^1.4.4",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@types/nodemailer": "^8.0.0",
+    "@typescript/native-preview": "^7.0.0-dev.20260421.2",
     "bun-types": "latest",
     "tsx": "^4.22.2"
   },
