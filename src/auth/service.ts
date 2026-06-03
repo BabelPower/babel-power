@@ -1,9 +1,13 @@
-import { AuthModel } from "./model";
-import { prisma } from "../db";
-import { Snowflake } from "@timondev/snowflakes";
-import { CAPTCHA_TTL_MS, CAPTCHA_TTL_SECONDS, publishCaptchaMail } from "../middleware/mq";
-import { redis } from "../middleware/redis";
-import { logger } from "../middleware/logger";
+import { AuthModel } from "./model"
+import { prisma } from "../db"
+import { Snowflake } from "@timondev/snowflakes"
+import {
+    CAPTCHA_TTL_MS,
+    CAPTCHA_TTL_SECONDS,
+    publishCaptchaMail,
+} from "../middleware/mq"
+import { redis } from "../middleware/redis"
+import { logger } from "../middleware/logger"
 
 export abstract class AuthService {
     /**
@@ -18,17 +22,17 @@ export abstract class AuthService {
         })
 
         if (!one) {
-            throw new Error("account or password is incorrect");
+            throw new Error("account or password is incorrect")
         }
 
         const ok = await Bun.password.verify(password, one.password, "bcrypt")
 
         if (!ok) {
-            throw new Error("account or password is incorrect");
+            throw new Error("account or password is incorrect")
         }
 
         return {
-            id: one.id.toString()
+            id: one.id.toString(),
         }
     }
 
@@ -39,8 +43,13 @@ export abstract class AuthService {
      * @param password 密码
      * @param captcha 邮箱验证码
      */
-    static async register({ phone, email, password, captcha }: AuthModel["registerInput"]) {
-        const captchaCache = await redis.get(`captcha:${ email }`)
+    static async register({
+        phone,
+        email,
+        password,
+        captcha,
+    }: AuthModel["registerInput"]) {
+        const captchaCache = await redis.get(`captcha:${email}`)
         if (!captchaCache || captchaCache !== captcha) {
             throw new Error("captcha is incorrect")
         }
@@ -68,21 +77,21 @@ export abstract class AuthService {
      * @param email 邮箱
      */
     static async getCaptcha(email: string) {
-        const captcha = crypto.randomUUID().slice(0, 6);
-        const cacheKey = `captcha:${ email }`;
+        const captcha = crypto.randomUUID().slice(0, 6)
+        const cacheKey = `captcha:${email}`
 
-        await redis.set(cacheKey, captcha, 'EX', CAPTCHA_TTL_SECONDS)
+        await redis.set(cacheKey, captcha, "EX", CAPTCHA_TTL_SECONDS)
 
-        const title = '<h1>Elysian-oven 验证码</h1>';
-        const body = `<p>您的验证码是：<strong>${ captcha }</strong></p>`;
-        const footer = '<p>有效期 3 分钟，请尽快使用。</p>';
+        const title = "<h1>Elysian-oven 验证码</h1>"
+        const body = `<p>您的验证码是：<strong>${captcha}</strong></p>`
+        const footer = "<p>有效期 3 分钟，请尽快使用。</p>"
 
         try {
             await publishCaptchaMail({
                 to: email,
                 subject: "Elysian-oven 验证码",
                 html: title + body + footer,
-                expiresAt: Date.now() + CAPTCHA_TTL_MS
+                expiresAt: Date.now() + CAPTCHA_TTL_MS,
             })
         } catch (error) {
             await redis.del(cacheKey)

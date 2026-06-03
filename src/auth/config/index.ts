@@ -1,15 +1,15 @@
 export type PublicRoute = {
-    method: string;
-    path: string;
-    match?: "exact" | "prefix";
-};
+    method: string
+    path: string
+    match?: "exact" | "prefix"
+}
 
 export const publicRoutes: PublicRoute[] = [
-    { method: "ALL", path: "/auth", match: "prefix" }
-];
+    { method: "ALL", path: "/auth", match: "prefix" },
+]
 
 export const isPublicRoute = (method: string, path: string) =>
-    publicRoutes.some(route => {
+    publicRoutes.some((route) => {
         if (route.method !== "ALL" && route.method !== method) {
             return false
         }
@@ -19,4 +19,4 @@ export const isPublicRoute = (method: string, path: string) =>
         }
 
         return path === route.path
-    });
+    })

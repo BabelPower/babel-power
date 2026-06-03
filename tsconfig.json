@@ -1,28 +1,28 @@
 {
-  "compilerOptions": {
-    /* Environment — Bun runs the newest JS, so type-check against it */
-    "target": "ESNext",
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "moduleDetection": "force",
+    "compilerOptions": {
+        /* Environment — Bun runs the newest JS, so type-check against it */
+        "target": "ESNext",
+        "lib": ["ESNext"],
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "moduleDetection": "force",
 
-    /* Bun transpiles & runs TS itself — tsgo only type-checks, never emits */
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
+        /* Bun transpiles & runs TS itself — tsgo only type-checks, never emits */
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
 
-    /* Interop */
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
+        /* Interop */
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
 
-    /* Type-checking */
-    "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+        /* Type-checking */
+        "strict": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
 
-    /* TS7 defaults `types` to []; keep Bun's globals explicit */
-    "types": ["bun-types"]
-  },
-  "include": ["src", "prisma.config.ts"],
-  "exclude": ["node_modules"]
+        /* TS7 defaults `types` to []; keep Bun's globals explicit */
+        "types": ["bun-types"]
+    },
+    "include": ["src", "prisma.config.ts"],
+    "exclude": ["node_modules"]
 }
