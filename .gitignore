@@ -44,3 +44,4 @@ package-lock.json
 **/*.bun
 
 /.env
+/.codex/config.toml

@@ -6,7 +6,7 @@ import bearer from "@elysia/bearer"
 export const authPlugin = new Elysia()
     .use(authJwtPlugin)
     .use(bearer())
-    .resolve({ as: "global" }, async ({ authJwt, path, request, bearer }) => {
+    .derive("global", async ({ authJwt, path, request, bearer }) => {
         if (isPublicRoute(request.method, path)) {
             return {
                 currentUser: null,
