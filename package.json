@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@elysia/bearer": "next",
+        "@elysia/cors": "next",
         "@elysia/jwt": "next",
         "@elysia/openapi": "next",
         "@prisma/client": "latest",

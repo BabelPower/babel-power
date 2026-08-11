@@ -6,6 +6,7 @@
       "name": "elysian-oven",
       "dependencies": {
         "@elysia/bearer": "next",
+        "@elysia/cors": "next",
         "@elysia/jwt": "next",
         "@elysia/openapi": "next",
         "@prisma/client": "latest",
@@ -41,6 +42,8 @@
     "@electric-sql/pglite-tools": ["@electric-sql/pglite-tools@0.3.3", "", { "peerDependencies": { "@electric-sql/pglite": "0.4.3" } }, "sha512-AlzLJTRJ8+UFgK8CmxIpyIpJ0+YaFw02IiOSdYrqxwPXdSyeIShz8aa9Tq+tYFXdPwcaMp/Fc80mQZ1dkOQ/wg=="],
 
     "@elysia/bearer": ["@elysia/bearer@2.0.0-beta.1", "", { "peerDependencies": { "elysia": ">= 2.0.0-beta.1" } }, "sha512-7JoszVCb7YaCjE4vElL0KmxWi5o6xpJfJBLY6E8DPR4UPPovETHwOxdqlcuLBxxpkREyw0gq2YslNX1EszaK4A=="],
+
+    "@elysia/cors": ["@elysia/cors@2.0.0-beta.1", "", { "peerDependencies": { "elysia": ">= 2.0.0-beta.1" } }, "sha512-dHb21xI4Dm7wcf5+rWLiLSwJARLAewnOzRjRk0wRMfBiLGA1t/CXsblzKUtwYRFhQCteUEGdhEace+6PF0UUKw=="],
 
     "@elysia/jwt": ["@elysia/jwt@2.0.0-beta.1", "", { "dependencies": { "jose": "^6.2.3" }, "peerDependencies": { "elysia": ">= 2.0.0-beta.1" } }, "sha512-SlB7X8Hi9wi/FphpIqqHHg61Kn0DWbpSO93ho6Yr4+voooqjge8nFScz7N6IGo3+vWp/3gYdwRYl2AVWkj5Mgw=="],
 
