@@ -6,14 +6,15 @@ import { authPlugin } from "./modules/auth/plugin"
 import { startMailListener } from "./middleware/mq/listener/mail"
 import { logger } from "./middleware/logger"
 import cors from "@elysia/cors"
+import { corsConfig } from "./shared/cors.ts"
 
 startMailListener().catch((err) =>
     logger.error({ err }, "mail listener failed"),
 )
 
 const app = new Elysia()
+    .use(cors(corsConfig))
     .use(openapi())
-    .use(cors())
     .use(authPlugin)
     .use(authController)
     .use(userController)
