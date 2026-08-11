@@ -1,8 +1,8 @@
 import { Elysia } from "elysia"
 import openapi from "@elysia/openapi"
-import { authController } from "./auth"
-import { userController } from "./user"
-import { authPlugin } from "./auth/plugin"
+import { authController } from "./modules/auth"
+import { userController } from "./modules/user"
+import { authPlugin } from "./modules/auth/plugin"
 import { startMailListener } from "./middleware/mq/listener/mail"
 import { logger } from "./middleware/logger"
 

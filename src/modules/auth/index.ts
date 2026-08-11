@@ -1,6 +1,6 @@
 import { Elysia, status } from "elysia"
-import { AuthService } from "./service"
-import { AuthModel } from "./model"
+import { AuthService } from "./service.ts"
+import { AuthModel } from "./model.ts"
 import { authJwtPlugin } from "./jwt"
 import { openapi } from "@elysia/openapi"
 

@@ -1,13 +1,13 @@
-import { AuthModel } from "./model"
-import { prisma } from "../db"
+import { AuthModel } from "./model.ts"
+import { prisma } from "../../db"
 import { Snowflake } from "@timondev/snowflakes"
 import {
     CAPTCHA_TTL_MS,
     CAPTCHA_TTL_SECONDS,
     publishCaptchaMail,
-} from "../middleware/mq"
-import { redis } from "../middleware/redis"
-import { logger } from "../middleware/logger"
+} from "../../middleware/mq"
+import { redis } from "../../middleware/redis"
+import { logger } from "../../middleware/logger"
 
 export abstract class AuthService {
     /**
