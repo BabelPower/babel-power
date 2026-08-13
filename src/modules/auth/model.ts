@@ -6,15 +6,15 @@ export const AuthModel = {
         phone: "/^1\\d{10}$/",
         password: "string",
     }),
+    loginResponse: type({
+        id: "string",
+        token: "string",
+    }),
     registerInput: type({
         phone: "string",
         email: "string.email",
         password: "string",
         captcha: "string",
-    }),
-    loginResponse: type({
-        id: "string",
-        token: "string",
     }),
 } as const
 
