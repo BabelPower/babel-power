@@ -3,7 +3,7 @@
     "version": "1.0.50",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "bun run --watch src/index.ts",
+        "dev": "bun run --watch src/index.ts --env-file .env",
         "typecheck": "tsc --noEmit",
         "format": "prettier . --write",
         "format:check": "prettier . --check"
@@ -13,6 +13,7 @@
         "@elysia/cors": "next",
         "@elysia/jwt": "next",
         "@elysia/openapi": "next",
+        "@prisma/adapter-pg": "latest",
         "@prisma/client": "latest",
         "@timondev/snowflakes": "latest",
         "arktype": "latest",
@@ -21,6 +22,7 @@
         "elysia": "next",
         "ioredis": "latest",
         "nodemailer": "latest",
+        "pg": "latest",
         "pino": "latest",
         "pino-pretty": "latest",
         "prisma": "latest"
