@@ -4,17 +4,17 @@ import { UnwrapSchema } from "elysia"
 export const AuthModel = {
     loginInput: type({
         phone: "/^1\\d{10}$/",
-        password: "string",
+        password: "string <= 16",
     }),
     loginResponse: type({
         id: "string",
         token: "string",
     }),
     registerInput: type({
-        phone: "string",
+        phone: "string == 11",
         email: "string.email",
-        password: "string",
-        captcha: "string",
+        password: "string <= 16",
+        captcha: "string == 6",
     }),
 } as const
 
